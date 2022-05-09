@@ -1,0 +1,45 @@
+<template>
+  <v-container>
+    <v-row>
+      <v-col v-for="gladiator in gladiators" :key="gladiator.id" cols="4">
+        <v-card class="mx-auto" max-width="344" outlined>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <div class="text-overline mb-4">GLADIATEUR</div>
+              <v-list-item-title class="text-h5 mb-1">
+                {{ gladiator.name }}
+              </v-list-item-title>
+            </v-list-item-content>
+
+            <v-list-item-avatar tile size="80" color="grey"
+              ><img src="../assets/gladiator.png"
+            /></v-list-item-avatar>
+          </v-list-item>
+
+          <v-card-actions>
+            <v-btn outlined rounded text
+              ><router-link :to="{ path: `/gladiator/${gladiator.id}` }">
+                Voir
+              </router-link></v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+</template>
+
+<script>
+import { getLudiById, getGladiatorsByLudi } from "../apis/cirque";
+
+export default {
+  name: "Ludi",
+  data() {
+    return { ludi: {}, gladiators: {} };
+  },
+  async mounted() {
+    this.ludi = await getLudiById(this.$route.params.id);
+    this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
+  },
+};
+</script>
