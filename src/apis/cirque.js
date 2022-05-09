@@ -54,7 +54,7 @@ export async function createAccount(
         newId = response.data.id;
         cirqueInstance
           .post("/ludis", {
-            name: ludi,
+            nom: ludi,
             specialite: specialite,
             lanisteId: newId,
           })
@@ -123,4 +123,30 @@ export async function getGladiatorsByLudi(id) {
     }
   }
   return gladiators;
+}
+
+export async function addLudi(name, specialite, idLaniste) {
+  try {
+    cirqueInstance
+      .post("/ludis", {
+        nom: name,
+        specialite: specialite,
+        lanisteId: idLaniste,
+      })
+      .then(function (response) {
+        store.commit("addLudi", {
+          id: response.data.id,
+          name: name,
+          specialite: specialite,
+          lanisteId: idLaniste,
+        });
+        return true;
+      })
+      .catch(function (error) {
+        console.log(error);
+        throw new Error("Erreur lors de la création du compte");
+      });
+  } catch (e) {
+    throw new Error("Erreur lors de la requête");
+  }
 }

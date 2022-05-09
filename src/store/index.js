@@ -19,5 +19,8 @@ export default new Vuex.Store({
     setLudis(state, ludis) {
       state.ludis = ludis;
     },
+    addLudi(state, ludi) {
+      state.ludis.push(ludi);
+    },
   },
 });

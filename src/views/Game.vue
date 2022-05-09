@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-container>
-      <h1>Bonjour {{ this.$store.state.laniste }}</h1>
-
+      <LudiModal />
+      <br />
+      <br />
       <v-row>
         <v-col v-for="ludi in this.$store.state.ludis" :key="ludi.id" cols="4">
           <v-card class="mx-auto" max-width="344" outlined>
@@ -34,10 +35,13 @@
 </template>
 <script>
 import { getLudisByAccount } from "../apis/cirque";
+import LudiModal from "../components/LudiModal.vue";
+
 export default {
   name: "Game",
   mounted() {
     getLudisByAccount(this.$store.state.id);
   },
+  components: { LudiModal },
 };
 </script>
