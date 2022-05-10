@@ -2,25 +2,22 @@
   <v-container>
     <v-row>
       <v-btn @click="goBack()">
-        <v-icon> mdi-chevron-left</v-icon> Retour
+        <v-icon> mdi-chevron-left</v-icon> {{ $t("back") }}
       </v-btn>
     </v-row>
     <br />
     <br />
     <v-row>
-      <GladiatorModal
-        @gladiatorAdded="getNewGladiator()"
-        :idLudi="this.$route.params.id"
-      />
+      <GladiatorModal :idLudi="this.$route.params.id" />
     </v-row>
     <br />
     <br />
     <v-row>
-      <v-col v-for="gladiator in gladiators" :key="gladiator.id" cols="4">
+      <v-col v-for="gladiator in glads" :key="gladiator.id" cols="4">
         <v-card class="mx-auto" max-width="344" outlined>
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="text-overline mb-4">GLADIATEUR</div>
+              <div class="text-overline mb-4">{{ $t("gladiator") }}</div>
               <v-list-item-title class="text-h5 mb-1">
                 {{ gladiator.name }}
               </v-list-item-title>
@@ -34,7 +31,7 @@
           <v-card-actions>
             <v-btn outlined rounded text
               ><router-link :to="{ path: `/gladiator/${gladiator.id}` }">
-                Voir
+                {{ $t("open") }}
               </router-link></v-btn
             >
           </v-card-actions>
@@ -53,14 +50,16 @@ export default {
   data() {
     return { ludi: [], gladiators: [] };
   },
+  computed: {
+    glads() {
+      return this.gladiators;
+    },
+  },
   components: { GladiatorModal },
   async mounted() {
     this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
   },
   methods: {
-    async getNewGladiator() {
-      this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
-    },
     goBack() {
       this.$router.go(-1);
     },

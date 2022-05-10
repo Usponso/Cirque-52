@@ -1,20 +1,21 @@
 <template>
-  <div>
+  <v-container>
+    <h1 class="text-center">{{ $t("login") }}</h1>
     <v-alert v-if="error" dense dismissible type="error">{{ error }}</v-alert>
-    <v-text-field v-model="email" label="Email"></v-text-field>
+    <v-text-field v-model="email" :label="$t('mail')"></v-text-field>
     <v-text-field
       v-model="password"
       :type="'password'"
-      label="Mot de passe"
+      :label="$t('password')"
     ></v-text-field>
     <v-btn
       color="primary"
       @keyup.enter="this.connection(email)"
       @click="connection(email)"
     >
-      Connexion
+      {{ $t("login") }}
     </v-btn>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -39,11 +40,10 @@ export default {
           await getLudisByAccount(this.$store.state.id);
           this.$router.push("/game");
         } else {
-          this.error = "Adresse email ou mot de passe incorrect";
+          this.error = this.$t("wrongSignup");
         }
       } else {
-        this.error =
-          "Veuillez renseigner votre email ainsi que votre mot de passe";
+        this.error = this.$t("errorSignup");
       }
     },
   },

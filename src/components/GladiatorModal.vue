@@ -2,12 +2,12 @@
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on">
-        Recruter un gladiateur
+        {{ $t("recruitGladiator") }}
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">Recruter un gladiateur</span>
+        <span class="text-h5"> {{ $t("recruitGladiator") }} </span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -19,7 +19,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="name"
-                label="Nom du gladiateur"
+                :label="$t('gladiatorName')"
                 required
               ></v-text-field>
             </v-col>
@@ -29,10 +29,10 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="red darken-1" text @click="dialog = false">
-          Fermer
+          {{ $t("close") }}
         </v-btn>
         <v-btn color="green darken-1" text @click="addGladiator(name)">
-          Recruter
+          {{ $t("recruit") }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -61,14 +61,12 @@ export default {
         if (this.nbGladiators.length < 10) {
           this.success = await addGladiator(name, this.idLudi);
           this.name = "";
-          this.$emit("gladiatorAdded"); //Test avec emit pour actualiser le tableau mais reste toujours pas réactif
+          this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
         } else {
-          this.errorRecruit =
-            "Ce ludi possède déjà le maximum de gladiateurs. (10 par ludi)";
+          this.errorRecruit = this.$t("gladiatorLimit");
         }
       } else {
-        this.errorRecruit =
-          "Vous n'avez pas assez de deniers pour recruter un nouveau gladiateur ! (Coût : 5 deniers)";
+        this.errorRecruit = this.$t("moneyLimit");
       }
     },
   },

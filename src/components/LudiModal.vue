@@ -2,12 +2,12 @@
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on">
-        Ajouter un ludi
+        {{ $t("addLudi") }}
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">Ajouter un ludi</span>
+        <span class="text-h5">{{ $t("addLudi") }}</span>
       </v-card-title>
       <v-card-text>
         <v-container>
@@ -15,7 +15,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="name"
-                label="Nom du ludi"
+                :label="$t('ludiName')"
                 required
               ></v-text-field>
             </v-col>
@@ -25,7 +25,7 @@
                 :items="items"
                 item-text="name"
                 item-value="value"
-                label="Spécialité"
+                :label="$t('specificity')"
                 required
               ></v-select>
             </v-col>
@@ -35,10 +35,10 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="red darken-1" text @click="dialog = false">
-          Fermer
+          {{ $t("close") }}
         </v-btn>
         <v-btn color="green darken-1" text @click="addLudi(name, specialite)">
-          Ajouter
+          {{ $t("add") }}
         </v-btn>
       </v-card-actions>
     </v-card>

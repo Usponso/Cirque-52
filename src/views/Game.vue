@@ -23,7 +23,7 @@
             <v-card-actions>
               <v-btn outlined rounded text
                 ><router-link :to="{ path: `/ludi/${ludi.id}` }">
-                  Voir
+                  {{ $t("open") }}
                 </router-link></v-btn
               >
             </v-card-actions>
