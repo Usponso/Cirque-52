@@ -144,7 +144,43 @@ export async function addLudi(name, specialite, idLaniste) {
       })
       .catch(function (error) {
         console.log(error);
-        throw new Error("Erreur lors de la création du compte");
+        throw new Error("Erreur lors de la création du ludi");
+      });
+  } catch (e) {
+    throw new Error("Erreur lors de la requête");
+  }
+}
+
+export async function addGladiator(name, idLudi) {
+  try {
+    cirqueInstance
+      .post("/gladiateurs", {
+        nom: name,
+        adresse: Math.ceil(Math.floor(Math.random() * 4)),
+        force: Math.ceil(Math.floor(Math.random() * 4)),
+        equilibre: Math.ceil(Math.floor(Math.random() * 4)),
+        vitesse: Math.ceil(Math.floor(Math.random() * 4)),
+        strategie: Math.ceil(Math.floor(Math.random() * 4)),
+        ludiId: idLudi,
+      })
+      .then(function (response) {
+        console.log(response);
+        store.commit("addGladiateur");
+        cirqueInstance
+          .patch(`/lanistes/${store.state.id}`, {
+            deniers: store.state.deniers,
+          })
+          .then(() => {
+            return true;
+          })
+          .catch(function (error) {
+            console.log(error);
+            throw new Error("Erreur lors du traitement");
+          });
+      })
+      .catch(function (error) {
+        console.log(error);
+        throw new Error("Erreur lors de la création du gladiateur");
       });
   } catch (e) {
     throw new Error("Erreur lors de la requête");

@@ -1,5 +1,11 @@
 <template>
   <v-container>
+    <GladiatorModal
+      @gladiatorAdded="getNewGladiator()"
+      :idLudi="this.$route.params.id"
+    />
+    <br />
+    <br />
     <v-row>
       <v-col v-for="gladiator in gladiators" :key="gladiator.id" cols="4">
         <v-card class="mx-auto" max-width="344" outlined>
@@ -30,16 +36,25 @@
 </template>
 
 <script>
-import { getLudiById, getGladiatorsByLudi } from "../apis/cirque";
+import { getGladiatorsByLudi } from "../apis/cirque";
+import GladiatorModal from "../components/GladiatorModal.vue";
 
 export default {
   name: "Ludi",
   data() {
-    return { ludi: {}, gladiators: {} };
+    return { ludi: [], gladiators: [] };
   },
+  components: { GladiatorModal },
   async mounted() {
-    this.ludi = await getLudiById(this.$route.params.id);
+    // this.ludi = await getLudiById(this.$route.params.id); // inutile
     this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
+  },
+  methods: {
+    async getNewGladiator() {
+      console.log("emit");
+      this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
+      console.log(this.gladiators);
+    },
   },
 };
 </script>

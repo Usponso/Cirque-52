@@ -8,7 +8,6 @@
       label="Mot de passe"
     ></v-text-field>
     <v-btn color="primary" @click="connection(email)"> Connexion </v-btn>
-    <v-btn color="primary" @click="appel()"> Appel </v-btn>
   </div>
 </template>
 

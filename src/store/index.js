@@ -22,5 +22,8 @@ export default new Vuex.Store({
     addLudi(state, ludi) {
       state.ludis.push(ludi);
     },
+    addGladiateur(state) {
+      state.deniers -= 5;
+    },
   },
 });

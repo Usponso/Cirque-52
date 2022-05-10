@@ -2,32 +2,26 @@
   <v-dialog v-model="dialog" persistent max-width="600px">
     <template v-slot:activator="{ on, attrs }">
       <v-btn color="primary" dark v-bind="attrs" v-on="on">
-        Ajouter un ludi
+        Recruter un gladiateur
       </v-btn>
     </template>
     <v-card>
       <v-card-title>
-        <span class="text-h5">Ajouter un ludi</span>
+        <span class="text-h5">Recruter un gladiateur</span>
       </v-card-title>
       <v-card-text>
         <v-container>
           <v-row>
+            <v-alert v-if="errorRecruit" dense dismissible type="error">{{
+              errorRecruit
+            }}</v-alert>
+
             <v-col cols="12">
               <v-text-field
                 v-model="name"
-                label="Nom du ludi"
+                label="Nom du gladiateur"
                 required
               ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-select
-                v-model="specialite"
-                :items="items"
-                item-text="name"
-                item-value="value"
-                label="Spécialité"
-                required
-              ></v-select>
             </v-col>
           </v-row>
         </v-container>
@@ -37,8 +31,8 @@
         <v-btn color="red darken-1" text @click="dialog = false">
           Fermer
         </v-btn>
-        <v-btn color="green darken-1" text @click="addLudi(name, specialite)">
-          Ajouter
+        <v-btn color="green darken-1" text @click="addGladiator(name)">
+          Recruter
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -46,25 +40,29 @@
 </template>
 
 <script>
-import { addLudi } from "../apis/cirque";
+import { addGladiator } from "../apis/cirque";
 export default {
   data: () => ({
     dialog: false,
-    items: [
-      { value: "COURSE_DE_CHAR", name: "Course de char" },
-      { value: "LUTTE", name: "Lutte" },
-      { value: "ATHLETISME", name: "Athlétisme" },
-    ],
     name: null,
-    specialite: null,
     success: null,
+    errorRecruit: null,
   }),
+  props: {
+    idLudi: { type: String, required: true },
+  },
   methods: {
-    async addLudi(name, specialite) {
+    async addGladiator(name) {
       this.success = false;
-      this.success = await addLudi(name, specialite, this.$store.state.id);
-      this.specialite = "";
-      this.name = "";
+      this.errorRecruit = null;
+      if (this.$store.state.deniers >= 5) {
+        this.success = await addGladiator(name, this.idLudi);
+        this.name = "";
+        this.$emit("gladiatorAdded");
+      } else {
+        this.errorRecruit =
+          "Vous n'avez pas assez de deniers pour recruter un nouveau gladiateur ! (Coût : 5 deniers)";
+      }
     },
   },
 };
