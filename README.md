@@ -2,9 +2,10 @@
 
 ## Fake API nécessaire pour que le projet fonctionne
 
-```
-https://github.com/foreach-academy/52-fake-api
+Cloner ce repo https://github.com/Usponso/52-fake-api
 
+Ensuite,
+```
 npm install
 npm start
 ```
