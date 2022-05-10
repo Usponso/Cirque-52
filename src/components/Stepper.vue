@@ -81,23 +81,8 @@ export default {
       specialite: "",
     };
   },
-  mounted() {
-    console.log(this.items);
-  },
   methods: {
     async signup(email, password, laniste, ludi, specialite) {
-      console.log("signing up..");
-      console.log(
-        email,
-        " / ",
-        password,
-        " / ",
-        laniste,
-        " / ",
-        ludi,
-        " / ",
-        specialite
-      );
       await createAccount(email, password, laniste, ludi, specialite);
     },
   },

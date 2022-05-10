@@ -55,14 +55,11 @@ export default {
   },
   components: { GladiatorModal },
   async mounted() {
-    // this.ludi = await getLudiById(this.$route.params.id); // inutile
     this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
   },
   methods: {
     async getNewGladiator() {
-      console.log("emit");
       this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
-      console.log(this.gladiators);
     },
     goBack() {
       this.$router.go(-1);
