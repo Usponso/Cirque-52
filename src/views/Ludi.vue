@@ -1,9 +1,18 @@
 <template>
   <v-container>
-    <GladiatorModal
-      @gladiatorAdded="getNewGladiator()"
-      :idLudi="this.$route.params.id"
-    />
+    <v-row>
+      <v-btn @click="goBack()">
+        <v-icon> mdi-chevron-left</v-icon> Retour
+      </v-btn>
+    </v-row>
+    <br />
+    <br />
+    <v-row>
+      <GladiatorModal
+        @gladiatorAdded="getNewGladiator()"
+        :idLudi="this.$route.params.id"
+      />
+    </v-row>
     <br />
     <br />
     <v-row>
@@ -54,6 +63,9 @@ export default {
       console.log("emit");
       this.gladiators = await getGladiatorsByLudi(this.$route.params.id);
       console.log(this.gladiators);
+    },
+    goBack() {
+      this.$router.go(-1);
     },
   },
 };

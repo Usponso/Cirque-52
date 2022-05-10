@@ -25,5 +25,9 @@ export default new Vuex.Store({
     addGladiateur(state) {
       state.deniers -= 5;
     },
+    disconnect(state) {
+      state.id = "";
+      state.laniste = "";
+    },
   },
 });

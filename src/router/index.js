@@ -24,6 +24,11 @@ const routes = [
     name: "Ludi",
     component: () => import("../views/Ludi.vue"),
   },
+  {
+    path: "/gladiator/:id",
+    name: "Gladiator",
+    component: () => import("../views/Gladiator.vue"),
+  },
 ];
 
 const router = new VueRouter({

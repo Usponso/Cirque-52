@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
+    <v-app-bar app color="red" dark>
       <div class="d-flex align-center">
         <p>Cirque 52</p>
       </div>
@@ -10,12 +10,17 @@
       <v-btn text v-if="!this.$store.state.id"
         ><router-link to="/signup">Inscription</router-link></v-btn
       >
-      <v-btn text v-else>{{
-        this.$store.state.laniste +
-        " - " +
-        this.$store.state.deniers +
-        " deniers"
-      }}</v-btn>
+      <div v-else>
+        <v-btn text>{{
+          this.$store.state.laniste +
+          " - " +
+          this.$store.state.deniers +
+          " deniers"
+        }}</v-btn>
+        <v-btn text @click="disconnect()"
+          ><v-icon>mdi-logout</v-icon> Deconnexion</v-btn
+        >
+      </div>
     </v-app-bar>
 
     <v-main><router-view /></v-main>
@@ -36,6 +41,12 @@ export default {
       this.$router.push("/");
     }
   },
+  methods: {
+    disconnect() {
+      this.$store.commit("disconnect");
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
@@ -43,5 +54,8 @@ export default {
 .v-application .v-app-bar a {
   color: white;
   text-decoration: none;
+}
+.v-main {
+  margin-top: 40px;
 }
 </style>

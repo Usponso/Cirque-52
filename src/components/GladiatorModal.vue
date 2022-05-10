@@ -40,13 +40,14 @@
 </template>
 
 <script>
-import { addGladiator } from "../apis/cirque";
+import { addGladiator, getGladiatorsByLudi } from "../apis/cirque";
 export default {
   data: () => ({
     dialog: false,
     name: null,
     success: null,
     errorRecruit: null,
+    nbGladiators: null,
   }),
   props: {
     idLudi: { type: String, required: true },
@@ -55,10 +56,16 @@ export default {
     async addGladiator(name) {
       this.success = false;
       this.errorRecruit = null;
+      this.nbGladiators = await getGladiatorsByLudi(this.idLudi);
       if (this.$store.state.deniers >= 5) {
-        this.success = await addGladiator(name, this.idLudi);
-        this.name = "";
-        this.$emit("gladiatorAdded");
+        if (this.nbGladiators.length < 10) {
+          this.success = await addGladiator(name, this.idLudi);
+          this.name = "";
+          this.$emit("gladiatorAdded"); //Test avec emit pour actualiser le tableau mais reste toujours pas réactif
+        } else {
+          this.errorRecruit =
+            "Ce ludi possède déjà le maximum de gladiateurs. (10 par ludi)";
+        }
       } else {
         this.errorRecruit =
           "Vous n'avez pas assez de deniers pour recruter un nouveau gladiateur ! (Coût : 5 deniers)";

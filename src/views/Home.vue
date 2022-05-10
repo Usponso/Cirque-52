@@ -7,7 +7,13 @@
       :type="'password'"
       label="Mot de passe"
     ></v-text-field>
-    <v-btn color="primary" @click="connection(email)"> Connexion </v-btn>
+    <v-btn
+      color="primary"
+      @keyup.enter="this.connection(email)"
+      @click="connection(email)"
+    >
+      Connexion
+    </v-btn>
   </div>
 </template>
 
@@ -27,12 +33,17 @@ export default {
   methods: {
     async connection(email) {
       this.error = null;
-      let connect = await connection(email);
-      if (connect) {
-        await getLudisByAccount(this.$store.state.id);
-        this.$router.push("/game");
+      if (this.email && this.password) {
+        let connect = await connection(email);
+        if (connect) {
+          await getLudisByAccount(this.$store.state.id);
+          this.$router.push("/game");
+        } else {
+          this.error = "Adresse email ou mot de passe incorrect";
+        }
       } else {
-        this.error = "Adresse email ou mot de passe incorrect";
+        this.error =
+          "Veuillez renseigner votre email ainsi que votre mot de passe";
       }
     },
   },

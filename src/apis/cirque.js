@@ -186,3 +186,34 @@ export async function addGladiator(name, idLudi) {
     throw new Error("Erreur lors de la requête");
   }
 }
+
+export async function getGladiatorById(idGladiator) {
+  try {
+    const res = await cirqueInstance(`/gladiateurs/${idGladiator}`);
+    let gladiator = {
+      id: res.data.id,
+      name: res.data.nom,
+      adresse: res.data.adresse,
+      force: res.data.force,
+      equilibre: res.data.equilibre,
+      vitesse: res.data.vitesse,
+      strategie: res.data.strategie,
+      ludiId: res.data.ludiId,
+    };
+    return gladiator;
+  } catch (e) {
+    console.log(e);
+    throw new Error("Erreur lors de la requête");
+  }
+}
+
+export async function getSpecialiteByIdLudi(idLudi) {
+  try {
+    const res = await cirqueInstance(`/ludis/${idLudi}`);
+    let specialite = res.data.specialite;
+    return specialite;
+  } catch (e) {
+    console.log(e);
+    throw new Error("Erreur lors de la requête");
+  }
+}
